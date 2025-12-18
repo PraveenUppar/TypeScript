@@ -1,6 +1,5 @@
 // String array
 const names: string[] = ["Alice", "Bob", "Charlie"];
-const cities: Array<string> = ["NYC", "LA"];
 
 // Number array
 const numbers: number[] = [1, 2, 3, 4, 5];
