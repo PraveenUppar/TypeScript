@@ -1,0 +1,12 @@
+TypeScript is JavaScript with static types. It adds a type system that checks code at compile-time rather than runtime.
+
+Why TypeScript?
+
+- Catch errors before runtime
+- Better IDE autocompletion and IntelliSense
+- Self-documenting code
+- Easier refactoring
+- Better for large-scale applications
+
+
+
