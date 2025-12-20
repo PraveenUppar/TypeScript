@@ -15,3 +15,20 @@ Typescript is something that compiles down to javascript
 When typescript is compiled down to javascript, you get type checking
 tsc is the official typescript compiler that you can use to convert Typescript code into Javascript
 
+# For Quick testing
+npm install -g typescript
+tsc --version 
+tsc --init
+npm install -g ts-node
+
+# For large project
+npm install -g typescript
+tsc --version 
+tsc --init
+npm init -y
+npm install --save-dev typescript @types/node ts-node
+
+# Commands
+To run the ts file = "ts-node index.ts",
+To build the ts file in dist: "tsc",
+To run the js from the dist: "node dist/index.js"
