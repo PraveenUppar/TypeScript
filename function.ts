@@ -3,6 +3,11 @@ function greet(name: string): string {
   return `Hello, ${name}!`;
 }
 
+function welcome(data: string): void {
+  return console.log(data);
+}
+welcome("Heelo");
+
 // Function with multiple parameters
 function calculateArea(width: number, height: number): number {
   return width * height;
@@ -32,8 +37,14 @@ type MathFunction = (a: number, b: number) => number;
 const add: MathFunction = (a, b) => a + b;
 const multiply: MathFunction = (a, b) => a * b;
 
-// Arrow functions
-const square = (num: number): number => num * num;
+// Normal function
+function normal_sum(a: number, b: number): number {
+  return a + b;
+}
+
+// Arrow function
+
+const arrow_sum = (a: number, b: number): number => a + b;
 
 // Function overloading
 function combine(a: string, b: string): string;

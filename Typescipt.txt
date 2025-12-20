@@ -8,5 +8,10 @@ Why TypeScript?
 - Easier refactoring
 - Better for large-scale applications
 
-
+How does typescript code run?
+Typescript code never runs in your browser. Your browser can only understand javascript. 
+Javascript is the runtime language (the thing that actually runs in your browser/nodejs runtime)
+Typescript is something that compiles down to javascript
+When typescript is compiled down to javascript, you get type checking
+tsc is the official typescript compiler that you can use to convert Typescript code into Javascript
 

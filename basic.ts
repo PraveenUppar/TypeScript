@@ -1,3 +1,6 @@
+// Basic Types:
+// Primitive Types:
+
 // String type
 const name: string = "John";
 const message: string = `Hello, ${name}`;

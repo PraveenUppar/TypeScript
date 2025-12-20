@@ -39,7 +39,7 @@ const config: Config = {
 };
 
 // Cannot modify readonly properties
-// config.apiUrl = "https://other.com";  // ❌ Error
+// config.apiUrl = "https://other.com";  // Error
 
 // Method definitions in interfaces
 interface Calculator {
