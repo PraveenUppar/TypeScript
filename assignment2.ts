@@ -2,6 +2,12 @@
 // TODO: Create a function 'calculateBMI' that takes height (number) and weight (number)
 // TODO: Return the BMI as a number. Formula: weight / (height * height)
 
+function calculateBMI(height: number, weight: number): number {
+  return weight / (height * height);
+}
+
+calculateBMI(120, 23);
+
 // Exercise 2: Optional and default parameters
 // TODO: Create a function 'greetUser' that takes:
 //   - name: string (required)
@@ -9,9 +15,20 @@
 //   - age: number (optional)
 // TODO: Return a personalized greeting string
 
+function greetUser(name: string, age: number, title?: string): void {
+  console.log(`Heelo ${title}${name} ${age}  `);
+}
+greetUser("Pavi", 20);
+
 // Exercise 3: Rest parameters
 // TODO: Create a function 'findMax' that takes any number of numbers
 // TODO: Return the maximum number using rest parameters
+
+function findMax(...numbers: number[]): void {
+  console.log(Math.max(...numbers));
+}
+
+findMax(1, 2, 3, 4);
 
 // Exercise 4: Callback function
 // TODO: Create a function 'mapArray' that:
@@ -19,8 +36,9 @@
 //   - Takes a callback function that transforms each number
 //   - Returns a new array with transformed values
 
-// Exercise 5: Function overloading
-// TODO: Create a function 'formatValue' with overloads for:
-//   - Input: number -> Output: string (formatted with $ sign)
-//   - Input: string -> Output: string (in UPPERCASE)
-//   - Input: boolean -> Output: string (as "yes" or "no")
+function mapArray(nums: number[], callback: (num: number) => number): number[] {
+  return nums.map(callback);
+}
+
+const result = mapArray([1, 2, 3, 4], (num) => num * 2);
+console.log(result);
