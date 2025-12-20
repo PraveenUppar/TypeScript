@@ -53,3 +53,20 @@ const simpleCalculator: Calculator = {
   subtract: (a, b) => a - b,
   multiply: (a, b) => a * b,
 };
+
+type User = {
+  id: number;
+  name: string;
+  active: boolean;
+};
+
+// Partial type (make all properties optional)
+type PartialUser = Partial<User>;
+const updateUser: PartialUser = { name: "Jane" }; // Only name required
+
+// Required type (make all properties required)
+type RequiredUser = Required<User>; // All properties must be present
+
+// Pick type (select specific properties)
+type UserPreview = Pick<User, "id" | "name">;
+const preview: UserPreview = { id: 1, name: "John" };
