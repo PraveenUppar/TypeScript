@@ -2,17 +2,15 @@ import restaurants from "./restaurants.js";
 import { type Restaurant } from "./restaurants.js";
 
 // filters
-const price = "2";
+const price = 2;
 const deliveryTimeMax = 90;
 const maxDistance = 10;
 
 let result: string;
 
-const priceBracket = price.length;
-
 const filteredRestaurants = restaurants.filter((restaurant: Restaurant) => {
   return (
-    restaurant.priceBracket <= priceBracket &&
+    restaurant.priceBracket <= price &&
     restaurant.deliveryTimeMinutes <= deliveryTimeMax &&
     restaurant.distance <= maxDistance
   );
