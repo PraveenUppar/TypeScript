@@ -1,11 +1,10 @@
 // Function that takes a callback
 function processArray(
   numbers: number[],
-  callback: (num: number) => void
+  callback: (num: number) => void,
 ): void {
   numbers.forEach(callback);
 }
-
 processArray([1, 2, 3], (num) => console.log(num * 2));
 
 // The higher-order function accepts a callback as a parameter
@@ -16,7 +15,6 @@ function fetchData(id: number, callback: (data: string) => void) {
     callback(result);
   }, 1000);
 }
-
 fetchData(1, (data) => {
   console.log(`Received: ${data}`);
 });
@@ -24,7 +22,7 @@ fetchData(1, (data) => {
 // Callback with return type
 function filterNumbers(
   numbers: number[],
-  predicate: (num: number) => boolean
+  predicate: (num: number) => boolean,
 ): number[] {
   return numbers.filter(predicate);
 }
