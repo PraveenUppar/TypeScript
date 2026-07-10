@@ -1,36 +1,63 @@
-// Restaurant Orders
-// Let’s come back to the restaurant recommender. The restaurant managers gave feedback that they were looking for additional functionality to filter orders so they can highlight their specials on the app.
+import { restaurants } from "./restaurants.js";
+import type { Restaurant } from "./restaurants.js";
+import { orders, PriceBracket } from "./orders.js";
+import type { Order } from "./orders.js";
 
-// We’re going to build on top of the previous project to filter orders instead of restaurants. The restaurant managers want to surface dishes that fit within the customer’s budget and show the cost of each dish. The program will use array methods, functions, and practice good code hygiene and organization. Let’s work on it step by step and enjoy some chicken and waffles at the end!
+// ============================================
+// STEP 1: Write getMaxPrice(). Given a PriceBracket, return the max
+// dollar amount that bracket allows. Low = $10, Medium = $20, High = $30.
+// This turns the "bracket" concept into an actual number we can compare against.
+// ============================================
+function getMaxPrice(priceBracket: PriceBracket): number {
+  if (priceBracket === PriceBracket.Low) {
+    return 10;
+  } else if (priceBracket === PriceBracket.Medium) {
+    return 20;
+  } else {
+    return 30;
+  }
+}
 
-// Your finished program will filter orders by price and print out the orders and their prices like below:
+// ============================================
+// STEP 2: Write getOrders(). Given a max price bracket and the full
+// orders list (an array of arrays — one sub-array per restaurant),
+// return a new array of arrays containing only the dishes that fit
+// within the max price. Keep the same restaurant grouping structure.
+// ============================================
+function getOrders(
+  priceBracket: PriceBracket,
+  allOrders: Order[][],
+): Order[][] {
+  const maxPrice = getMaxPrice(priceBracket);
 
+  return allOrders.map((restaurantOrders) =>
+    restaurantOrders.filter((order) => order.price <= maxPrice),
+  );
+}
+
+// ============================================
+// STEP 3: Write printOrders(). Given the restaurants list and a
+// matching (filtered) orders array, print each restaurant's name
+// followed by its eligible orders and their prices, formatted like:
+//
 // Restaurant Name #1
 // - Order 1: $9.99
 // - Order 2: $8.99
-// Restaurant Name #2
-// - Order 1: $17.99
-// - Order 2: $15.99
+// ============================================
+function printOrders(
+  allRestaurants: Restaurant[],
+  eligibleOrders: Order[][],
+): void {
+  allRestaurants.forEach((restaurant, index) => {
+    console.log(restaurant.name);
 
-// Copy to Clipboard
-
-// Throughout the project, you may find it helpful to validate your progress. There are tasks at the end of each group to walk you through this, however, here are a couple of commands that may be useful as you work:
-
-// To verify your code with the typescript compiler: tsc
-
-// To run your code after you’ve compiled: node index.js
-
-// Code review available when you’re done
-
-import { restaurants, Restaurant } from "./restaurants";
-import { orders, Order, PriceBracket } from "./orders";
-
-// Add your getMaxPrice() function below:
-
-// Add your getOrders() function below:
-
-// Add your printOrders() function below:
+    const restaurantOrders = eligibleOrders[index];
+    restaurantOrders.forEach((order) => {
+      console.log(`- ${order.name}: $${order.price}`);
+    });
+  });
+}
 
 // Main
-// const eligibleOrders = getOrders(PriceBracket.Low, orders);
-// printOrders(restaurants, eligibleOrders);
+const eligibleOrders = getOrders(PriceBracket.Low, orders);
+printOrders(restaurants, eligibleOrders);

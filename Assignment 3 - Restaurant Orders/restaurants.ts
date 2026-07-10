@@ -1,4 +1,4 @@
-import { PriceBracket } from "./orders";
+import { PriceBracket } from "./orders.js";
 
 export const restaurants = [
   {
@@ -42,4 +42,4 @@ export const restaurants = [
     distance: "12",
   },
 ];
-export type Restaurant = (typeof restaurants)[0][0];
+export type Restaurant = (typeof restaurants)[0];

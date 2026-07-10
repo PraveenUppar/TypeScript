@@ -1,5 +1,5 @@
 export enum PriceBracket {
-  low, // $0 - $10
+  Low, // $0 - $10
   Medium, // $10 - $20
   High, // $20 - $30
 }
@@ -77,4 +77,4 @@ export const orders = [
   ],
 ];
 
-export type Order = (typeof orders)[0][0];
+export type Order = (typeof orders)[0];
