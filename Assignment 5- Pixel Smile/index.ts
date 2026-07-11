@@ -1,9 +1,3 @@
-// It turns out we’ve been given a program that was half implemented by a colleague.
-// It’s supposed to create pixel art outputting a smiling face to the console, but there are many errors and it doesn’t work.
-
-// In this project, we’re going to leverage TypeScript’s type system to help us fix bugs and guide our work implementing the missing functions.
-// At the end, we’ll have a smiling face outputting to the console and the opportunity to draw our own pictures.
-
 // create the image data
 const imageWidth = 20;
 const imageHeight = 8;
@@ -17,7 +11,8 @@ drawDot(12, 2);
 // smile
 drawDot(4, 4);
 drawHorizontalLine(4, 5, 12);
-drawDot(15, "4");
+// BUG FIX: "4" (string) -> 4 (number), to match drawDot's number parameter
+drawDot(15, 4);
 
 // output what we drew to the console
 outputImage();
@@ -40,8 +35,55 @@ function drawRectangle(x: number, y: number, width: number, height: number) {
  * @param y - The vertical position within
  * the image.
  */
-function isPointInImage(x: number, y?: number): string {
+// BUG FIX: return type changed from `string` to `boolean` to match what
+// the function actually returns. `y` changed from optional to required,
+// since the comparisons below don't work correctly with `undefined`.
+function isPointInImage(x: number, y: number): boolean {
   return x >= 0 && x < imageWidth && y >= 0 && y < imageHeight;
+}
+
+// ============================================
+// STEP 1 (missing function): setPixel() turns a single pixel on (or off)
+// at the given x, y coordinate. It should:
+// - do nothing if the point is outside the image (use isPointInImage)
+// - otherwise, use the row-major formula (y * imageWidth + x) to find
+//   the correct index in imageData and set it to `value`
+// ============================================
+function setPixel(x: number, y: number, value: boolean = true): void {
+  if (!isPointInImage(x, y)) {
+    return;
+  }
+
+  const index = y * imageWidth + x;
+  imageData[index] = value;
+}
+
+// ============================================
+// STEP 2 (missing function): drawDot() turns on a single pixel at (x, y).
+// This can just delegate to setPixel().
+// ============================================
+function drawDot(x: number, y: number): void {
+  setPixel(x, y);
+}
+
+// ============================================
+// STEP 3 (missing function): drawHorizontalLine() turns on a row of
+// pixels, starting at (x, y) and extending `width` pixels to the right.
+// ============================================
+function drawHorizontalLine(x: number, y: number, width: number): void {
+  for (let i = x; i < x + width; i++) {
+    setPixel(i, y);
+  }
+}
+
+// ============================================
+// STEP 4 (missing function): drawVerticalLine() turns on a column of
+// pixels, starting at (x, y) and extending `height` pixels downward.
+// ============================================
+function drawVerticalLine(x: number, y: number, height: number): void {
+  for (let i = y; i < y + height; i++) {
+    setPixel(x, i);
+  }
 }
 
 /**
@@ -51,7 +93,10 @@ function isPointInImage(x: number, y?: number): string {
  * @param offChar - Character to render an
  * "off" pixel with.
  */
-function outputImage(onChar = "X", offChar) {
+// BUG FIX: offChar now has a type annotation (string) and a default
+// value ("-"), matching how onChar is declared, since outputImage()
+// is called with no arguments.
+function outputImage(onChar: string = "X", offChar: string = "-"): void {
   let text = "";
 
   for (let i = 0; i < imageData.length; i++) {
@@ -59,7 +104,9 @@ function outputImage(onChar = "X", offChar) {
       text += "\n"; // new line
     }
 
-    text += imageData[i] ? onChar : offChar * 2;
+    // BUG FIX: was `offChar * 2` (invalid — multiplying a string), now
+    // just prints offChar once per "off" pixel.
+    text += imageData[i] ? onChar : offChar;
   }
 
   console.log(text);
@@ -79,11 +126,6 @@ function outputImage(onChar = "X", offChar) {
  * `x` is the horizontal position in the image
  * and `y` is the vertical position from the top
  * left corner.
- *
- * Note: This function has a return type annotation
- * of `boolean[]`. That means it's an array of
- * booleans. We'll learn more about this in a
- * future module.
  */
 function createImageData(): boolean[] {
   // create array of size `length` containing `false` values

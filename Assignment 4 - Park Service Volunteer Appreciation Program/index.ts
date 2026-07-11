@@ -1,38 +1,109 @@
-// The Park Service has just inherited two parks: Wolf Point Park and Raccoon Meadows. Each park has a volunteer program where volunteers help maintain the parks by cleaning campsites, planning educational events, and maintaining hiking trails.
-
-// The Park Service would like to combine their volunteers and introduce a volunteer appreciation program, where the top volunteers get a special edition park badge for their service. It’s your job to help complete a program that was partially written by a colleague to help the Park Service determine this season’s top volunteers.
-
-// You’ll need to take your colleague’s code, combine data from both park’s volunteer logs, then calculate which volunteers have the most hours. Get your bug spray and hiking boots and let’s type out this program!
-
-import {
+import type {
   RaccoonMeadowsVolunteers,
   RaccoonMeadowsActivity,
-  raccoonMeadowsVolunteers,
-} from "./raccoon-meadows-log";
+} from "./raccoon-meadows-log.js";
+import { raccoonMeadowsVolunteers } from "./raccoon-meadows-log.js";
 
-import {
+import type {
   WolfPointVolunteers,
   WolfPointActivity,
-  wolfPointVolunteers,
-} from "./wolf-point-log";
+} from "./wolf-point-log.js";
+import { wolfPointVolunteers } from "./wolf-point-log.js";
 
-type CombinedActivity = RaccoonMeadowsActivity | WolfPointActivity;
+// ============================================
+// STEP 1: Define one common shape for an activity, regardless of which
+// park it came from. Every activity, once normalized, has a description,
+// hours (a number), and verified (a boolean).
+// ============================================
+type CombinedActivity = {
+  description: string;
+  hours: number;
+  verified: boolean;
+};
 
-type Volunteers = {
-  id: number;
+// ============================================
+// STEP 2: Define one common shape for a volunteer. id must be string
+// since Wolf Point's ids are strings ("400sg") — Raccoon Meadows'
+// numeric ids will get converted to strings to match.
+// ============================================
+type Volunteer = {
+  id: string;
   name: string;
   activities: CombinedActivity[];
 };
 
+// ============================================
+// STEP 3: Write a type guard to tell the two activity shapes apart.
+// Wolf Point activities have a "notes" field; Raccoon Meadows activities
+// have a "description" field. Checking for one of these tells TypeScript
+// (and us) which shape we're looking at.
+// ============================================
+function isWolfPointActivity(
+  activity: RaccoonMeadowsActivity | WolfPointActivity,
+): activity is WolfPointActivity {
+  return "notes" in activity;
+}
+
+// ============================================
+// STEP 4: Normalize a single activity into the common CombinedActivity
+// shape, no matter which park it came from.
+// ============================================
+function normalizeActivity(
+  activity: RaccoonMeadowsActivity | WolfPointActivity,
+): CombinedActivity {
+  if (isWolfPointActivity(activity)) {
+    return {
+      description: activity.notes,
+      hours: activity.time,
+      verified: activity.verified,
+    };
+  }
+
+  return {
+    description: activity.description,
+    hours: activity.hours,
+    verified: activity.verified === "Yes",
+  };
+}
+
+// ============================================
+// STEP 5: Write a type guard to tell the two volunteer shapes apart.
+// Wolf Point ids are strings; Raccoon Meadows ids are numbers.
+// ============================================
+function isWolfPointVolunteer(
+  volunteer: RaccoonMeadowsVolunteers | WolfPointVolunteers,
+): volunteer is WolfPointVolunteers {
+  return typeof volunteer.id === "string";
+}
+
+// ============================================
+// STEP 6: combineVolunteers() takes the mixed list from both parks and
+// returns a single array of Volunteer, with ids as strings and
+// activities normalized into CombinedActivity.
+// ============================================
 function combineVolunteers(
   volunteers: (RaccoonMeadowsVolunteers | WolfPointVolunteers)[],
-) {}
+): Volunteer[] {
+  return volunteers.map((volunteer) => {
+    return {
+      id: isWolfPointVolunteer(volunteer) ? volunteer.id : String(volunteer.id),
+      name: volunteer.name,
+      activities: volunteer.activities.map(normalizeActivity),
+    };
+  });
+}
 
-function calculateHours(volunteers: Volunteers[]) {
+// ============================================
+// STEP 7: calculateHours() sums each volunteer's activity hours now that
+// every activity has a normalized "hours" field to add up.
+// ============================================
+function calculateHours(volunteers: Volunteer[]) {
   return volunteers.map((volunteer) => {
     let hours = 0;
 
-    volunteer.activities.forEach((activity) => {});
+    volunteer.activities.forEach((activity) => {
+      hours += activity.hours;
+    });
 
     return {
       id: volunteer.id,
@@ -42,6 +113,19 @@ function calculateHours(volunteers: Volunteers[]) {
   });
 }
 
+// ============================================
+// STEP 8: Combine both parks' volunteers, then calculate total hours,
+// then sort descending so top volunteers appear first.
+// ============================================
 const combinedVolunteers = combineVolunteers(
-  [].concat(wolfPointVolunteers, raccoonMeadowsVolunteers),
+  ([] as (RaccoonMeadowsVolunteers | WolfPointVolunteers)[]).concat(
+    wolfPointVolunteers,
+    raccoonMeadowsVolunteers,
+  ),
 );
+
+const volunteerHours = calculateHours(combinedVolunteers);
+
+const topVolunteers = [...volunteerHours].sort((a, b) => b.hours - a.hours);
+
+console.log(topVolunteers);

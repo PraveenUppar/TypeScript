@@ -24,10 +24,7 @@ function getMaxPrice(priceBracket: PriceBracket): number {
 // return a new array of arrays containing only the dishes that fit
 // within the max price. Keep the same restaurant grouping structure.
 // ============================================
-function getOrders(
-  priceBracket: PriceBracket,
-  allOrders: Order[][],
-): Order[][] {
+function getOrders(priceBracket: PriceBracket, allOrders: Order[]): Order[] {
   const maxPrice = getMaxPrice(priceBracket);
 
   return allOrders.map((restaurantOrders) =>
@@ -46,13 +43,13 @@ function getOrders(
 // ============================================
 function printOrders(
   allRestaurants: Restaurant[],
-  eligibleOrders: Order[][],
+  eligibleOrders: Order[],
 ): void {
   allRestaurants.forEach((restaurant, index) => {
     console.log(restaurant.name);
 
     const restaurantOrders = eligibleOrders[index];
-    restaurantOrders.forEach((order) => {
+    restaurantOrders?.forEach((order) => {
       console.log(`- ${order.name}: $${order.price}`);
     });
   });
