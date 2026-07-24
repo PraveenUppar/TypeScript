@@ -1,0 +1,39 @@
+TypeScript Revision - Key Concepts
+==================================
+
+TypeScript is JavaScript with static typing.
+It helps you catch many mistakes before running the code.
+
+How to use this folder:
+1. Read the numbered files in order.
+2. Type-check files with: tsc --noEmit
+3. Compile one file with: tsc 01-basics.ts
+4. Run compiled JavaScript with: node 01-basics.js
+5. Practice after every few topics.
+6. Complete assignments without looking at solutions first.
+
+TypeScript Learning Path:
+1. Basics: what TypeScript is, type annotations, inference
+2. Primitive types: string, number, boolean, null, undefined
+3. Arrays and tuples
+4. Objects and object types
+5. Functions and typed parameters/returns
+6. Union and literal types
+7. Type aliases and interfaces
+8. Optional and readonly properties
+9. Enums and const objects
+10. Generics
+11. Type narrowing
+12. Classes and access modifiers
+13. Modules
+14. Async TypeScript
+15. Utility types
+
+JavaScript vs TypeScript:
+- JavaScript runs directly in Node.js and browsers.
+- TypeScript must be compiled to JavaScript.
+- TypeScript adds types, interfaces, generics, and compile-time checking.
+- TypeScript does not change runtime behavior by itself.
+
+Revision rule:
+First make the code correct in JavaScript, then make the types correct in TypeScript.
