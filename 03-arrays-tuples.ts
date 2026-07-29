@@ -3,7 +3,7 @@ export {};
 // Arrays and Tuples
 
 let numbers: number[] = [1, 2, 3, 4];
-let skills: Array<string> = ["HTML", "CSS", "TypeScript"];
+let skills: string[] = ["HTML", "CSS", "TypeScript"];
 
 numbers.push(5);
 skills.push("Node.js");

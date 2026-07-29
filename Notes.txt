@@ -35,5 +35,4 @@ JavaScript vs TypeScript:
 - TypeScript adds types, interfaces, generics, and compile-time checking.
 - TypeScript does not change runtime behavior by itself.
 
-Revision rule:
-First make the code correct in JavaScript, then make the types correct in TypeScript.
+
