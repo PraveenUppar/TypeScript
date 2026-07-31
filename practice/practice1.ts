@@ -1,5 +1,3 @@
-export {};
-
 // Practice 1: Basic Types
 
 const studentName: string = "Praveen";
@@ -9,23 +7,23 @@ let skills: string[] = ["JavaScript", "TypeScript"];
 
 console.log(studentName, age, isActive, skills);
 
-type Student = {
+type PracticeStudent = {
   name: string;
   age: number;
   skills: string[];
   isActive: boolean;
 };
 
-const student: Student = {
+const student: PracticeStudent = {
   name: studentName,
-  age,
-  skills,
+  age: age,
+  skills: skills,
   isActive,
 };
 
 console.log(student);
 
-function createSummary(student: Student): string {
+function createSummary(student: PracticeStudent): string {
   return `${student.name} knows ${student.skills.join(", ")}`;
 }
 

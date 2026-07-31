@@ -1,7 +1,6 @@
 export {};
 
 // TypeScript Basics
-// Type-check: tsc --noEmit
 
 let studentName: string = "Praveen";
 let age: number = 22;
